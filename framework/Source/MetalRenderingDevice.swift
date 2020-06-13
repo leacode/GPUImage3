@@ -37,7 +37,6 @@ public class MetalRenderingDevice {
         }
         
         do {
-            let frameworkBundle = Bundle(for: MetalRenderingDevice.self)
             let metalLibraryPath = frameworkBundle.path(forResource: "default", ofType: "metallib")!
             
             self.shaderLibrary = try device.makeLibrary(filepath:metalLibraryPath)
@@ -45,4 +44,13 @@ public class MetalRenderingDevice {
             fatalError("Could not load library")
         }
     }
+}
+
+var frameworkBundle: Bundle {
+
+    let currentBundle   = Bundle(for: MetalRenderingDevice.self)
+    let bundleURL       = currentBundle.resourceURL?.appendingPathComponent("GPUImage.bundle")
+    let resourceBundle  = Bundle(url: bundleURL!) ?? currentBundle
+
+    return resourceBundle
 }
